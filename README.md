@@ -16,6 +16,8 @@ Just an avid fan (Miami Heat) playing around with NBA data to get cool relations
 
 ### Sources
 Utilizing API's written against nba.com found here: https://github.com/swar/nba_api
-#### Inspiration 
+#### Resources 
+Peter Beshai ----> https://peterbeshai.com/
 1) https://buckets.peterbeshai.com/app/#/playerView/201935_2015
-2) http://savvastjortjoglou.com/nba-shot-sharts.html
+2) https://shotline.peterbeshai.com/
+3) http://savvastjortjoglou.com/nba-shot-sharts.html

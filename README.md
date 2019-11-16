@@ -12,6 +12,7 @@ Just an avid fan (Miami Heat) playing around with NBA data to get cool relations
     c) point differential -> Does it actually get harder to win in the playoffs?
 * Shot attempts vs distance through a game and figure out IMPORTANT shots ("Takeover" moments or "heat-check" shots)
 * Further extension to use twitter API to find tweets about players heating up
+* How to figure out quality of team based on team shot chart efficiency?
 
 ### Sources
 Utilizing API's written against nba.com found here: https://github.com/swar/nba_api

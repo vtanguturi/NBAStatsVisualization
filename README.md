@@ -14,6 +14,12 @@ Just an avid fan (Miami Heat) playing around with NBA data to get cool relations
 * Further extension to use twitter API to find tweets about players heating up
 * How to figure out quality of team based on team shot chart efficiency?
 
+### Integration Ideas:
+
+* Use with AWS services Cloudfront, APIGateway, Lambda, DynamoDB, Cloudwatch to continuosly update
+* Integrate with social media (e.g twitter API)
+* Add a mobile app/website aspect to this (Angular/ReactJS)
+
 ### Sources
 Utilizing API's written against nba.com found here: https://github.com/swar/nba_api
 #### Resources 

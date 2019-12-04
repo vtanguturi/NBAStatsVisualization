@@ -1,5 +1,5 @@
 # NBAStatsVisualization
-Just an avid fan (Miami Heat) playing around with NBA data to get cool relationships
+Just an avid (Miami Heat) fan playing around with NBA data in my spare time
 
 ### Ideas:
 

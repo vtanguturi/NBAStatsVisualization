@@ -1,3 +1,7 @@
+## To make API calls to get all players, and indiv player info
+from nba_api.stats.endpoints import franchiseplayers
+from nba_api.stats.endpoints import playergamelog
+
 ## This is to get the connection to the nba endpoints correctly (hot fix to work until they push changes)
 headers = {
     'Host': 'stats.nba.com',
@@ -33,23 +37,19 @@ for t in list_teams:
 print(team_to_id)
 
 ## Get all players in a team and figure out the stats to winning
-# Example is for Dallas:
-# Make API call for players across all seasons for a particular franchise
-from nba_api.stats.endpoints import franchiseplayers
-fp = franchiseplayers.FranchisePlayers(team_id=team_to_id["DAL"], headers=headers)
-players = fp.get_data_frames()[0]
-players.head()
+def get_winning_stats_per_team(team):
+    fp = franchiseplayers.FranchisePlayers(team_id=team_to_id[team], headers=headers)
+    players = fp.get_data_frames()[0]
+    # Build the list of players in the 2019-2020 season
+    active_players = players.loc[players['ACTIVE_WITH_TEAM'] == 1]
+    ids_per_team = active_players['PERSON_ID'].values
+    player_names = active_players['PLAYER'].values
+    players_per_team = dict(zip(ids_per_team, player_names))
+    ## Get the winning_stats_for a player
+    for player in players_per_team:
+        pgl = playergamelog.PlayerGameLog(player_id=player, headers=headers)
+        player_game_data = pgl.get_data_frames()[0]
+        determine_stats_to_winning(player_game_data, players_per_team[player])
 
-# Build the list of players in the 2019-2020 season
-active_players = players.loc[players['ACTIVE_WITH_TEAM'] == 1]
-ids_per_team = active_players['PERSON_ID'].values
-player_names = active_players['PLAYER'].values
-players_per_team = dict(zip(ids_per_team, player_names))
-print(players_per_team)
-
-
-## Get the relationship for every player
-for player in players_per_team:
-    pgl = playergamelog.PlayerGameLog(player_id=player, headers=headers)
-    player_game_data = pgl.get_data_frames()[0]
-    determine_stats_to_winning(player_game_data, players_per_team[player])
+## This will get all the graphs for that team
+get_winning_stats_per_team("MIA")

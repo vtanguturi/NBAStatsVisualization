@@ -8,7 +8,7 @@ Just an avid (Miami Heat) fan playing around with NBA data in my spare time
 * Determine and predict who will win a game
 	a) [DONE] Compare teams in a game based on different recorded stat accumulation in quarter-bucketized metrics
 	b) Predict outcome of the game based on difference of the stats in the comparision
-* Playoff vs Regular season comparisons of:
+* [Can't do this no way to get info] Playoff vs Regular season comparisons of:
     a) Homecourt Advantage
     b) player stats -> Use the difference to get tiers of players who "step it up", stay the same, underperform (choke, etc)
     c) point differential -> Does it actually get harder to win in the playoffs?

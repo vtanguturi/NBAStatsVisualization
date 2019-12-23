@@ -12,10 +12,11 @@ Just an avid (Miami Heat) fan playing around with NBA data in my spare time
     a) Homecourt Advantage
     b) player stats -> Use the difference to get tiers of players who "step it up", stay the same, underperform (choke, etc)
     c) point differential -> Does it actually get harder to win in the playoffs?
+* [In Progress] Determine IMPORTANT shots ("Takeover" moments or "heat-check" shots)
+	a) Also based on game win probability find inflection points to point to a play or event in game that is the takeover moment
+	b) Maybe shot chart vs distance from the rim (usually players pull from deep when they are feeling it)
 * Figure out quality of team (Offensive efficiency) based on team shot chart efficiency
 * Player shot chart weighted into how deep into a game, and then extend it to how deep into a season
-* Determine IMPORTANT shots ("Takeover" moments or "heat-check" shots)
-	a) Maybe shot chart vs distance from the rim (usually players pull from deep when they are feeling it)
 
 ### Integration/Extension Ideas:
 

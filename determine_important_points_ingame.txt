@@ -1,0 +1,9 @@
+This is a TODO for the logic here:
+
+* Need to clean up to keep the info like the 'mode', 'number of inflection occurences', the 'order of the derivative'
+all in a class that way we can call these methods on a stat object or a team object and so that there isnt that
+much hardcoding
+
+* Also try this out with a graph of the game score and the total number of points for a team. That way you can overlay
+both of these results somehow (maybe weight it a little bit) and determine a final ranking of important plays in the
+game for each individual team

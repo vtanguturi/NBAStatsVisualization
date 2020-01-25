@@ -4,7 +4,7 @@ from nba_api.stats.endpoints import playergamelog
 
 from headers import get_headers
 ## This is to get the connection to the nba endpoints correctly (hot fix to work until they push changes)
-headers = get_headers
+headers = get_headers()
 
 def determine_stats_win_index(player_game_data):  
     FG_PCT_THRESHOLD = 0.5

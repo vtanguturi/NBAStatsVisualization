@@ -1,6 +1,6 @@
 from headers import get_headers
 ## This is to get the connection to the nba endpoints correctly (hot fix to work until they push changes)
-headers = get_headers
+headers = get_headers()
 
 # Make API Call for players across all seasons for a particular franchise
 from nba_api.stats.endpoints import franchiseplayers

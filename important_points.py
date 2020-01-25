@@ -8,7 +8,7 @@ import seaborn as sns
 import json
 from headers import get_headers
 ## This is to get the connection to the nba endpoints correctly (hot fix to work until they push changes)
-headers = get_headers
+headers = get_headers()
 
 ## Build the team name to team_id map
 from nba_api.stats.static import teams

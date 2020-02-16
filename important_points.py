@@ -36,22 +36,84 @@ def plot_game_win_probability(win_probability, title):
     plt.plot(ind, baseline, 'k-')
     plt.title(title)
     if '@' in title:
-        plt.legend((title[-3:], title[:3]))
+        home_team = title[-3:]
+        away_team = title[:3]
     else:
-        plt.legend((title[:3], title[-3:]))
+        home_team = title[:3]
+        away_team = title[-3:]
+    plt.legend((home_team, away_team))
+    teams = {'home': home_team, 'visit': away_team}
+    
+    ## Annotate the graph with the important points and print out all the plays:
+    game_pct = np.abs(home_pct - visit_pct)
+    game_inflection = get_inflection_point_occurences(game_pct, 2)
+
+    plt.plot(game_inflection[0:10], 10*[0.5], 'bX', markersize=20)
+
+    print("Game important plays: ")
+    get_influential_plays(win_probability, game_inflection, teams)     
     plt.show()
 
-def generate_win_probability_team(team):
+def generate_win_probability_team(team, NUMBER_GAMES):
     gpbp = teamgamelog.TeamGameLog(team_id=team_to_id[team], headers=headers)
     tgl = gpbp.get_data_frames()[0]
     games = tgl['Game_ID'].values
     matchups = tgl['MATCHUP'].values
+    results = tgl['WL'].values
     i = 0
-    for game in games:
+    selected_games = games[0:NUMBER_GAMES]
+    for game in selected_games:
         wpp = winprobabilitypbp.WinProbabilityPBP(game_id=game, headers=headers)
         wp = wpp.get_data_frames()[0]
         plot_game_win_probability(wp, matchups[i])
+        print("This game resulted with %s getting the %s" % (team, results[i]))
+        print("====================================================================")
         i += 1
 
-## TODO: come up with a way to determine the inflection points in the above graphs to then determine the
-## actual play that is the cause. (Rank the top N plays for a game by this standard)
+def get_inflection_point_occurences(team_data, derivative_type):
+    second_deriv = np.diff(team_data, n=derivative_type).tolist()
+    second_deriv_sorted = sorted(second_deriv, reverse=True)
+    inflection_occurences = []
+    for i in second_deriv_sorted:
+        inflection_occurences.append(second_deriv.index(i) + 2)
+    return inflection_occurences    
+
+def get_influential_plays(wp, inflection_occurences, teams):
+    events = wp['EVENT_NUM'].values
+    descriptions = wp['DESCRIPTION'].values
+    quarter = wp['PERIOD'].values
+    time_in_quarter = wp['SECONDS_REMAINING'].values
+    home_possession = wp['HOME_POSS_IND'].values
+    
+    event_inflect = events[inflection_occurences]
+    di = descriptions[inflection_occurences]
+    qi = quarter[inflection_occurences]
+    ti = time_in_quarter[inflection_occurences]
+    hpi = home_possession[inflection_occurences]
+    
+    put_the_output(di, ti, qi, hpi, teams)
+    
+def put_the_output(desc_inflect, tiq_inflect, quarter_inflect, home_posessions, teams):
+    number = 10
+    home_plays = 0
+    visit_plays = 0
+     print("Top turning point descriptions: ")
+     print("========================================================")
+    for i in range(len(desc_inflect)):
+        d = desc_inflect[i]
+        if d is not None:
+            number = number - 1
+            if home_posessions[i] == 1:
+                home_plays += 1
+            else:
+                visit_plays += 1
+             print('Q%s: %s left %s' % (quarter_inflect[i], convert_secs_into_gametime(tiq_inflect[i]), d))
+        if number <= 0:
+            break
+     print("========================================================")
+    print("Important plays: \n%s:%d\n%s:%d" % (teams['home'], home_plays, teams['visit'], visit_plays))
+    
+def convert_secs_into_gametime(time_left_quarters):
+    seconds = time_left_quarters % 60
+    minutes = (time_left_quarters - seconds) / 60
+    return '%d:%d' % (minutes, seconds)

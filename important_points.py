@@ -29,11 +29,13 @@ from nba_api.stats.endpoints import winprobabilitypbp
 def plot_game_win_probability(win_probability, title):
     home_pct = win_probability['HOME_PCT'].values
     visit_pct = win_probability['VISITOR_PCT'].values
+    
+    home_pts = win_probability['HOME_PTS'].values
+    visit_pts = win_probability['VISITOR_PTS'].values
+    
     ind = range(len(home_pct))
-    baseline = [0.5] * len(home_pct)
-    plt.plot(ind, home_pct, 'g.')
-    plt.plot(ind, visit_pct, 'r^')
-    plt.plot(ind, baseline, 'k-')
+    plt.plot(ind, home_pts, 'g.')
+    plt.plot(ind, visit_pts, 'r^')
     plt.title(title)
     if '@' in title:
         home_team = title[-3:]
@@ -48,7 +50,7 @@ def plot_game_win_probability(win_probability, title):
     game_pct = np.abs(home_pct - visit_pct)
     game_inflection = get_inflection_point_occurences(game_pct, 2)
 
-    plt.plot(game_inflection[0:10], 10*[0.5], 'bX', markersize=20)
+    plt.plot(game_inflection[0:10], 10*[0], 'bX', markersize=20)
 
     print("Game important plays: ")
     get_influential_plays(win_probability, game_inflection, teams)     
